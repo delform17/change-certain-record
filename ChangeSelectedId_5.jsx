@@ -1,9 +1,11 @@
 import React  from 'react';
 import ReactDOM from 'react-dom/client';
 import { useState } from "react";
+import './ChangeSelectedId_5.css'; 
 
 let randomNum = null;
 let maxLOfArr = null;
+
 
 const listsOfPassangersSits = [
         
@@ -19,6 +21,8 @@ const listsOfPassangersSits = [
 
 maxLOfArr = listsOfPassangersSits.length;
 function UpdateTheLastRecord(){
+	
+	const [textInfoObj, setTextInfoObj] = useState('');
     
     function setRandomNumber(){
         randomNum = Math.floor(Math.random() * 5);
@@ -34,11 +38,12 @@ function UpdateTheLastRecord(){
                 countTheRecord = countTheRecord + 1;
                 //console.log(countTheRecord);
                 if(countTheRecord === maxLOfArr){
-                    console.log("Found end of array");
-                if(!isNaN(actualRow.PlaceID)){              
+                    //console.log("Found end of array");
+                if(!isNaN(actualRow.PlaceID)){              //Sprawdz czy element jest integer czy string
                     //if(actualRow.PlaceID != 0){    
                     setRandomNumber();
-                    console.log("Place is enable");
+					setTextInfoObj("Place is enable");
+                    //console.log("Place is enable");
                     
                     return {...actualRow, PlaceID : ''}
                 }
@@ -46,7 +51,7 @@ function UpdateTheLastRecord(){
             }
             return actualRow;
         });
-        //maxLOfArr--;
+        
         maxLOfArr =  maxLOfArr - randomNum; 
         if(maxLOfArr < 0)
         {
@@ -54,16 +59,17 @@ function UpdateTheLastRecord(){
         }
         
         setMyRow(countAndUpdate);
-        console.log(maxLOfArr);
-        
+       
 }
-return(
+
+
+    return(
         <div>
-            <button onClick={UpdateRandomRows}>Update Row</button>
+            <button onClick={UpdateRandomRows} className="actionButton">Update Row</button>
             <ul>
             {
                 myRow.map((row, index) => (
-                    <li key={index}>
+                    <li key={index} className="stylesForPassangers">
                         <span> Name : {row.name}</span>
                         <span> PlaceID : {row.PlaceID}</span>
                     </li>
@@ -71,6 +77,7 @@ return(
                 ))
             }
             </ul>
+			<p className="stylesForText">{textInfoObj}</p>
         </div>
     )
 }
